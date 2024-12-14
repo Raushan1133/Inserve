@@ -5,25 +5,22 @@ export const userSlice = createSlice({
   initialState: {
     name:"",
     email :"",
-    profilePic : "",
+    profile_pic : "",
     type : "",
-    token : ""
   },
   reducers: {
     setUser: (state,action) => {
       state.name = action.payload.name;
       state.email = action.payload.email;
-      state.profilePic = action.payload.profilePic;
+      state.profile_pic = action.payload.profile_pic;
       state.type = action.payload.type;
-      state.token = action.payload.token;
     },
     
     removeUser : (state, action) => {
         state.name = "",
         state.email = "",
-        state.profilePic = "",
-        state.type = "",
-        state.token = ""
+        state.profile_pic = "",
+        state.type = ""
     }
   },
 })

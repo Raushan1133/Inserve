@@ -1,21 +1,19 @@
-import React, { useEffect } from 'react'
-import { useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import "leaflet/dist/leaflet.css";
 
 const BusinessList = () => {
-  const user = useSelector(state => state?.user)
-  const navigate = useNavigate()
-  // useEffect(()=>{
-  //   if(!user?.name){
-  //     navigate("/")
-  //   }
-  // },[user])
-  console.log(user)
+  const position = [25.64096, 85.0952192]; // Latitude and longitude
   return (
-    <div className='text-red-500'>
-      hii there
-    </div>
-  )
-}
+    <MapContainer center={position} zoom={13} style={{ height: "400px", width: "100%" }}>
+      <TileLayer
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      />
+      <Marker position={position}>
+        <Popup>A sample marker on the map!</Popup>
+      </Marker>
+    </MapContainer>
+  );
+};
 
 export default BusinessList

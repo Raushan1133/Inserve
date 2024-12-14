@@ -9,19 +9,73 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { setUser } from "@/features/UserSlice";
+import { setUser } from "../features/userSlice";
 import { useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { data, Link, useNavigate } from "react-router-dom";
 import { Button } from "../components/ui/button";
+import { useState } from "react";
+import { LucideEye, LucideEyeClosed } from "lucide-react";
+import { summaryApi } from "@/common/summaryApi";
+import toast from "react-hot-toast";
 
 export const Login = () => {
+
+  const[loading,setLoading] = useState(false);
+  const[showPassword,setShowPassword] = useState(false);
+  const [data,setData] = useState({
+    email : "",
+    password : ""
+  })
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const user = useUser();
     
+    const handleOnChange = async(e)=>{
+      const {name,value} = e.target;
 
-    const handleOnSubmit = async(email)=>{
-     const response =  await fetch("");
+      setData({
+        ...data,
+        [name] : value
+      })
+    }
+
+    const handleOnSubmit = async(e)=>{
+      e.preventDefault();
+     try {
+      setLoading(true);
+        const response = await fetch(summaryApi.login.url,{
+          method: summaryApi.login.method,
+          headers:{
+            "content-type":"application/json"
+          },
+          credentials:"include",
+          body:JSON.stringify({
+            email : data.email,
+            password : data.password
+          })
+        });
+
+        const responseResult = await response?.json();
+        console.log(responseResult);
+        console.log(responseResult);
+        dispatch(setUser({
+          name:responseResult?.data?.name,
+          email :responseResult?.data?.email,
+          profile_pic :responseResult?.data?.profile_pic,
+          type : responseResult?.data?.type,
+        }))
+        if(responseResult?.success){
+          toast.success(responseResult?.message);
+          navigate("/");
+        }else{
+          toast.error(responseResult?.message);
+        }
+        setLoading(false);
+     } catch (error) {
+      setLoading(false);
+      toast.error("Something went wrong !")
+        console.log(error)
+     }
     }
     
   return (
@@ -31,24 +85,38 @@ export const Login = () => {
         
           <form className="p-3 flex flex-col gap-3 ">
             <div>
-            <label htmlFor="">Email : </label>
+            <label htmlFor="email">Email : </label>
             <input
               type="text"
-              className="w-full p-3 border border-primary rounded-sm outline-none"
+              name="email"
+              id="email"
+              value={data.email}
+              onChange={(e)=>handleOnChange(e)}
+              className="w-full p-3 border text-black border-primary rounded-sm outline-none"
               placeholder="enter your email"
             />
             </div>
               <div>
-              <label htmlFor="">Password : </label>
-            <input
-              type="text"
-              className="w-full p-3 border border-primary rounded-sm outline-none"
-              placeholder="Enter password"
+              <label htmlFor="password">Password : </label>
+              <div className="relative">
+              <input
+            required
+            name="password"
+            id="password"
+            value={data.password}
+              type={showPassword ? "text" :"password"}
+              className="w-full p-3 border border-primary text-black rounded-sm outline-none"
+              placeholder="password"
+              onChange={(e)=>{handleOnChange(e)}}
             />
+            {
+              showPassword ? <LucideEyeClosed className="absolute text-primary right-3 cursor-pointer bottom-3 " onClick={()=>setShowPassword(!showPassword)} /> : <LucideEye onClick={()=>setShowPassword(!showPassword)} className="absolute right-3 cursor-pointer bottom-3 text-primary" />
+            }
+              </div>
               </div>
 
               <div className="w-full mt-3 ">
-                <Button className='w-full ' >Login</Button>
+                <Button className='w-full' onClick={(e)=>handleOnSubmit(e)} >Login</Button>
               </div>
               <Link to={'/register'}  className="text-right text-primary">New User ? Register here</Link >
           </form>
