@@ -8,12 +8,14 @@ const userSchema = mongoose.Schema({
     },
     email:{
         type : String,
-        required : true
+        required : true,
+        match: [/\S+@\S+\.\S+/, "Invalid email address"]
     },
     password:{
         type : String,
+        required:true
     },
-    picture:{
+    profile_pic:{
         type:String
     },
     type:{
@@ -21,25 +23,8 @@ const userSchema = mongoose.Schema({
       enum:["seeker","provider"],
       default:"seeker"
     },
-    bookings:[
-        {
-          user: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "Business",
-            required: true,
-          },
-          bookedAt: {
-            type: String,
-            required: true,
-          },
-
-          bookingStatus:  {
-            type:String,
-            enum:["booked","cancelled","completed"],
-            default : "booked"
-          }
-        },
-      ],
+},{
+  timestamps:true
 }
 )
 

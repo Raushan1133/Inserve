@@ -1,8 +1,8 @@
 import express from 'express'
-import { addBusinessWithCategory } from '../controllers/businessController.js';
+import { addBusiness } from '../controllers/businessController.js';
 
 const businessRouter = express.Router();
 
-businessRouter.get("/setsamplebusiness",addBusinessWithCategory )
+businessRouter.post("/add-business",addBusiness)
 
 export default businessRouter

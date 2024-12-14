@@ -6,18 +6,22 @@ import userRouter from './routes/userRoutes.js';
 import businessRouter from './routes/businessRoutes.js'
 import categoryRouter from './routes/categoryRoutes.js';
 import cors from 'cors'
+import cookieParser from 'cookie-parser';
+import commonRouter from './routes/commonRoutes.js';
 configDotenv();
 connectDB();
 app.use(express.json())
 app.use(cors({
-    origin:true,
+    origin:process.env.FRONTEND_URL,
     credentials:true,
 }))
+app.use(cookieParser())
 
 
 app.use("/api/user",userRouter);
 app.use("/api/business",businessRouter);
-app.use("/api/categories",categoryRouter)
+app.use("/api/categories",categoryRouter);
+app.use("/api/common",commonRouter);
 
 app.get("/",(req,res)=>{
     try {
