@@ -9,22 +9,15 @@ import { useDescope, useUser } from "@descope/react-sdk";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuGroup,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuPortal,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { useDispatch, useSelector } from "react-redux";
 import { removeUser } from "../features/userSlice";
 import toast from "react-hot-toast";
 import { summaryApi } from "@/common/summaryApi";
-import { BookCheck, BookIcon, BookTypeIcon, ListOrderedIcon, LogOut, User } from "lucide-react";
+import { BookCheck, LogOut, User } from "lucide-react";
 
 const Header = () => {
   // const { user } = useUser();
@@ -81,8 +74,10 @@ const Header = () => {
             </DropdownMenuTrigger>
             <DropdownMenuContent>
             <DropdownMenuItem className="cursor-pointer">
+            <Link to={"/my-profile"} className="flex gap-1 items-center">
             <User />
             <span>Profile</span>
+            </Link>
           </DropdownMenuItem>
               <DropdownMenuSeparator  />
               <DropdownMenuItem className="cursor-pointer">

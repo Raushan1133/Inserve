@@ -14,6 +14,9 @@ import { summaryApi } from './common/summaryApi'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setUser } from './features/userSlice'
+import Profile from './component/Profile'
+import BusinessDetails from './component/BusinessDetails'
+import CategoryPage from './component/layout/categoryPage'
 // import { BusinessList } from './pages/BusinessList'
 
 function App() {
@@ -46,7 +49,10 @@ function App() {
           <Route path='register' element={<RegisterLogin />} />
           <Route path='login' element={<Login />} />
           <Route path='type' element={<AskType />} />
+          <Route path='my-profile' element={<Profile />} />
           <Route path='provider-details' element={<ProviderDetails />} />
+          <Route path='details/:id' element={<BusinessDetails />} />
+          <Route path='all-category-business/:category' element={<CategoryPage />} />
           <Route path='provider-dashboard' element={<ProviderDashBoard />} />
           </Route>
           <Route path='*' element={<NotFound/>} />

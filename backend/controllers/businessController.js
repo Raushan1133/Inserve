@@ -2,6 +2,15 @@ import businessModel from "../models/businessModel.js";
 import categoryModel from "../models/CategoryModel.js";
 import jwt from 'jsonwebtoken'
 
+const getAllBusiness = async(req,res)=>{
+  try {
+    const data = await businessModel.find().populate("category");
+    return res.status(200).json({success:true,data:data});
+  } catch (error) {
+    console.log(error)
+      return res.status(500).json({message:error.message,success:false});
+  }
+}
 const addBusiness = async (req,res) => {
   try {
       
@@ -51,6 +60,28 @@ const addBusiness = async (req,res) => {
   }
 };
 
+const getBusinessById = async(req,res)=>{
+  try {
+    const {id} = req.body;
+    const data = await businessModel.findById(id).populate("category");
+    return res.status(200).json({success:true,data:data});
+  } catch (error) {
+      return res.status(500).json({message:"Something went wrong !",error:error.message});
+  }
+}
 
-export {addBusiness}
+const getBusinessByCategory = async(req,res)=>{
+  try {
+    const {id} = req.body;
+    const data = await businessModel.find({category : id}).populate("category");
+    return res.status(200).json({success:true,data:data});
+  } catch (error) {
+    console.log(error)
+    return res.status(500).json({message:"Something went wrong !",error:error.message});
+  }
+
+}
+
+
+export {addBusiness,getAllBusiness,getBusinessById, getBusinessByCategory}
 

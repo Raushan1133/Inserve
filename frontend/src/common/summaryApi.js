@@ -17,18 +17,26 @@ export const summaryApi ={
         method:"POST"
     },
 
-
     // Logout both provider/seeker
     logout:{
         url:import.meta.env.VITE_SERVER+"/api/common/logout",
         method:"GET"
     },
 
-
     // Get user details
     getUserDetails:{
         url:import.meta.env.VITE_SERVER+"/api/common/get-user-details",
         method:"GET" 
+    },
+
+    // Update details
+    updateUserDetails:{
+        url:import.meta.env.VITE_SERVER+"/api/common/update-details",
+        method:"PATCH" 
+    },
+    changePassword:{
+        url:import.meta.env.VITE_SERVER+"/api/common/change-password",
+        method:"PATCH" 
     },
 
     // Manage categories list 
@@ -41,6 +49,19 @@ export const summaryApi ={
         method:"POST"
     },
 
-
-
+    // Businesses
+    getAllBusiness :{
+        url:import.meta.env.VITE_SERVER+"/api/business/all-business",
+        method:"GET"
+    },
+    // Get Business By Id
+    getBusinessById :{
+        url:import.meta.env.VITE_SERVER+"/api/business/get-business",
+        method:"POST"
+    },
+    // Get Business By Category
+    getBusinessByCategory : {
+        url:import.meta.env.VITE_SERVER+"/api/business/get-business-by-category",
+        method:"POST"
+    }
 }
