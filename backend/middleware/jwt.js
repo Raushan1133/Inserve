@@ -10,6 +10,7 @@ const authMiddleware = async(req,res,next)=>{
         if(error){
             return res.status(400).json({"message":"token expired, Login again",success:false});
         }
+        // console.log("Decoded : ",decoded)
         req.user = decoded;
     });
 

@@ -57,8 +57,8 @@ export const Login = () => {
 
         const responseResult = await response?.json();
         console.log(responseResult);
-        console.log(responseResult);
         dispatch(setUser({
+          id:responseResult?.data?._id,
           name:responseResult?.data?.name,
           email :responseResult?.data?.email,
           profile_pic :responseResult?.data?.profile_pic,

@@ -7,13 +7,12 @@ const bookingSchema = new mongoose.Schema({
         required: true 
     },
     date: {
-        type: Date,
-        default: Date.now
+        type: String,
+        required : true
     },
     time: {
         type: String,
-        required: true,
-        match: [/^\d{2}:\d{2}$/, "Invalid time format. Use HH:MM"]
+        required: true
     },
     business: {
         type: mongoose.Schema.Types.ObjectId,

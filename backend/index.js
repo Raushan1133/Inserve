@@ -1,5 +1,6 @@
 import express from 'express'
 const app = express();
+
 import connectDB from './db.js';
 import { configDotenv } from 'dotenv';
 import userRouter from './routes/userRoutes.js';
@@ -8,6 +9,7 @@ import categoryRouter from './routes/categoryRoutes.js';
 import cors from 'cors'
 import cookieParser from 'cookie-parser';
 import commonRouter from './routes/commonRoutes.js';
+import bookingRouter from './routes/bookingRoutes.js';
 configDotenv();
 connectDB();
 app.use(express.json())
@@ -22,6 +24,7 @@ app.use("/api/user",userRouter);
 app.use("/api/business",businessRouter);
 app.use("/api/categories",categoryRouter);
 app.use("/api/common",commonRouter);
+app.use("/api/booking",bookingRouter);
 
 app.get("/",(req,res)=>{
     try {

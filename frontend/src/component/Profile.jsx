@@ -174,15 +174,15 @@ const Profile = () => {
   },[user])
   return (
     <div className="flex items-center justify-center">
-      <div className="flex mx-w-md flex-col gap-4 shadow-xl items-center p-5 md:p-10  rounded-lg hover:shadow-xl cursor-pointer justify-center">
+      <div className="flex mx-w-md flex-col gap-4 shadow-xl items-center p-5 md:p-10 dark:bg-gray-900 rounded-lg hover:shadow-xl cursor-pointer justify-center">
       <h1 className="text-primary font-semibold text-3xl">My Profile</h1>
-        <div className="h-48 w-48 border border-primary  rounded-full relative">
+        <div className="h-48 w-48 border border-primary  rounded-full relative ">
           {data?.profile_pic ? (
             <div className="">
               <img
                 src={data?.profile_pic}
                 alt="my_pic"
-                className="h-48 w-48 rounded-full bg-cover"
+                className="h-48 w-48 rounded-full object-cover aspect-square"
               />
               
             </div>

@@ -26,7 +26,7 @@ const CategorySidebar = () => {
       <div className='flex flex-col gap-3 mt-3'>
       {
         categories?.map((item,index)=>(
-          <Link to={"/all-category-business/"+item?._id}  key={index}  className={`flex gap-2 p-4 border rounded-lg  cursor-pointer  hover:text-primary hover:shadow-md hover:shadow-primary transition-all ease-in-out`}>
+          <Link to={"/"+item?._id}  key={index}  className={`flex gap-2 p-4 border rounded-lg  cursor-pointer  hover:text-primary hover:shadow-md hover:shadow-primary transition-all ease-in-out`}>
             <h2>{item.name}</h2>
             <img src={item.icon} alt='icon' height={30} width={30}></img>
           </Link>

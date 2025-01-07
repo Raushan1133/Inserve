@@ -105,7 +105,7 @@ export const RegisterLogin = () => {
                     <div className='h-full w-full flex justify-center items-center'>
                       {
                        <div> 
-                        <img src={data?.picture} alt='profile pic' className='rounded-full h-full w-full  object-scale-down '/>
+                        <img src={data?.picture} alt='profile pic' className='rounded-full h-full w-full  object-cover '/>
                         <div className='absolute text-2xl text-red-600 left-16 top-16 z-10'>
                         <button title='remove photo' className='text-4xl font-bold bg-white rounded-full   hover:text-red-600' onClick={handleClearUploadPhoto}>
                             <MdDelete/>

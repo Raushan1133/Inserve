@@ -5,9 +5,11 @@ import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast';
 import { Link } from 'react-router-dom';
 import BusinessList from '../component/BusinessList';
+import { useSelector } from 'react-redux';
 
 const Hero = () => {
   // Fetch all Categories
+  const user = useSelector(state=>state.user);
   const[categories,setCategories] = useState([]);
   const fetchCategories = async()=>{
     try {
@@ -36,8 +38,9 @@ const Hero = () => {
   }
 
   useEffect(()=>{
-    fetchCategories();
-    getAllBusiness();
+    console.log(user)
+   user.type !== "provider" && fetchCategories();
+   user.type !== "provider" && getAllBusiness();
   },[])
   return (
     <>

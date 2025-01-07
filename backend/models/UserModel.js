@@ -30,8 +30,8 @@ const userSchema = mongoose.Schema({
 
 userSchema.pre('save',async function(next){
   if(this.isModified("password")){
-    const salt = bcryptjs.genSaltSync(10);
-    this.password = bcryptjs.hashSync(this.password, salt);
+    const salt = await bcryptjs.genSaltSync(10);
+    this.password = await bcryptjs.hashSync(this.password, salt);
   }
   next();
 })

@@ -38,6 +38,7 @@ const addBusiness = async (req,res) => {
         type:"Point",
         coordinates:[location.latitude,location.longitude]
       },
+      gallery,
       businessStartTime,
       businessClosingTime,
       serviceGap

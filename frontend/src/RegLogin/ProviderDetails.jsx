@@ -189,6 +189,7 @@ const ProviderDetails = () => {
         gallery:[...prev.gallery,uploadPhoto?.url]
       }
     })
+    console.log(providerData.gallery)
     setGalleryLoading(false)
     }
   }
@@ -239,12 +240,14 @@ const ProviderDetails = () => {
                   businessStartTime : providerData.businessStartTime,
                   businessClosingTime : providerData.businessEndTime,
                   serviceGap : providerData.serviceGap
-                })
+                }),
+                credentials:"include"
               });
               const responseResult = await response?.json();
               if(responseResult?.success){
                 toast.success(responseResult?.message);
                 dispatch(setUser({
+                  id:responseResult?.data?._id,
                   name : responseResult?.data?.name,
                   email : responseResult?.data?.email,
                   profile_pic : responseResult?.data?.profile_pic,

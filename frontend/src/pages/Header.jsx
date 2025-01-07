@@ -17,7 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { removeUser } from "../features/userSlice";
 import toast from "react-hot-toast";
 import { summaryApi } from "@/common/summaryApi";
-import { BookCheck, LogOut, User } from "lucide-react";
+import { BookCheck, LogOut, Settings, User } from "lucide-react";
 
 const Header = () => {
   // const { user } = useUser();
@@ -66,24 +66,30 @@ const Header = () => {
                 {
                   user?.profile_pic ? <img
                   src={user?.profile_pic}
-                  className="rounded-full h-[50px] w-[50px] bg-cover"
+                  className="rounded-full h-[50px] w-[50px] object-cover aspect-square"
                   alt="me"
                 /> : <span className="font-bold">{user?.name?.charAt(0)}{user?.name?.split(" ")[1] ? user?.name?.split(" ")[1].charAt(0) : ""}</span>
                 }
               </div>
             </DropdownMenuTrigger>
-            <DropdownMenuContent>
-            <DropdownMenuItem className="cursor-pointer">
-            <Link to={"/my-profile"} className="flex gap-1 items-center">
+            <DropdownMenuContent  >
+            <Link  to={"/my-profile"}>
+            <DropdownMenuItem className="cursor-pointer" >
             <User />
-            <span>Profile</span>
+            <span >Profile</span>
+          </DropdownMenuItem>
             </Link>
-          </DropdownMenuItem>
               <DropdownMenuSeparator  />
-              <DropdownMenuItem className="cursor-pointer">
+            {user.type === "seeker" ? <Link to={"/mybookings"}>
+              <DropdownMenuItem className="cursor-pointer" >
             <BookCheck/>
-            <span>My Bookings</span>
-          </DropdownMenuItem>
+            <span >My Bookings</span>
+          </DropdownMenuItem></Link> : <Link to={"/provider-settings"}>
+              <DropdownMenuItem className="cursor-pointer" >
+            <Settings/>
+            <span >Setting</span>
+          </DropdownMenuItem></Link>
+          }  
               <DropdownMenuSeparator />
         <DropdownMenuItem className='cursor-pointer' onClick={()=>handleLogOut()}>
           <LogOut />

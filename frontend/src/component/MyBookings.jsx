@@ -13,16 +13,8 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import toast from "react-hot-toast";
 import { summaryApi } from "@/common/summaryApi";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { MdCameraAlt, MdCancel, MdDelete, MdDoneOutline } from "react-icons/md";
 
-const ProviderDashBoard = () => {
+const MyBookings = () => {
   const [bookings, setBookings] = useState([]);
 
   const fetchBookings = async () => {
@@ -35,7 +27,6 @@ const ProviderDashBoard = () => {
         credentials: "include",
       });
       const response = await resp?.json();
-      console.log(response)
       if (response?.success) {
         setBookings(response?.data);
         console.log(bookings);
@@ -59,7 +50,7 @@ const ProviderDashBoard = () => {
           "content-type" : "application/json"
         },
         body : JSON.stringify({
-          userId : businessId,
+          businessId : businessId,
           date : date,
           time : time
         })
@@ -100,14 +91,14 @@ const ProviderDashBoard = () => {
                   (item, index) =>
                     item?.bookingStatus !== "completed" && (
                       <Link
-                        to={`/user/${item?.user?._id}`}
+                        to={`/details/${item?.business?._id}`}
                         key={index}
                         className="flex gap dark:bg-gray-900 items-center cursor-pointer w-full justify-between shadow rounded "
                       >
                         <div>
                           <img
-                            src={item.user.profile_pic}
-                            alt="user"
+                            src={item.business.profile_pic}
+                            alt="busienss"
                             className="h-20 w-20  rounded aspect-square bg-cover"
                           />
                         </div>
@@ -118,22 +109,7 @@ const ProviderDashBoard = () => {
                           {item.bookingStatus}
                         </p>
                         {
-                         item.bookingStatus !== "cancelled" &&              <DropdownMenu>
-                         <DropdownMenuTrigger className="cursor-pointer" asChild>
-                         <Button>Update</Button>                           
-                         </DropdownMenuTrigger>
-                         <DropdownMenuContent>
-                         <DropdownMenuItem className="cursor-pointer" >
-                     <MdDoneOutline  className="text-primary" />
-                       <span >Mark As Completed</span>
-                     </DropdownMenuItem>
-                           <DropdownMenuSeparator />
-                     <DropdownMenuItem className="cursor-pointer" onClick={(e)=>cancelBookings(e,item?.user?._id,item?.date,item?.time)}>
-                     <MdCancel className="text-red-500" />
-                       <span >Cancel</span>
-                     </DropdownMenuItem>
-                         </DropdownMenuContent>
-                       </DropdownMenu>
+                         item.bookingStatus !== "cancelled" &&  <Button variant="destructive" onClick={(e)=>cancelBookings(e,item?.business?._id,item?.date,item?.time)}>Cancel</Button>
                         }
                         <hr />
                       </Link>
@@ -156,7 +132,7 @@ const ProviderDashBoard = () => {
                   (item, index) =>
                     item?.bookingStatus === "completed" && (
                       <Link
-                        to={`/user/${item?.user?._id}`}
+                        to={`/details/${item?.business?._id}`}
                         key={index}
                         className="flex flex-wrap dark:bg-gray-900 items-center cursor-pointer w-full justify-between scrollbar-none shadow rounded "
                       >
@@ -189,4 +165,4 @@ const ProviderDashBoard = () => {
   );
 };
 
-export default ProviderDashBoard;
+export default MyBookings;

@@ -17,6 +17,8 @@ import { setUser } from './features/userSlice'
 import Profile from './component/Profile'
 import BusinessDetails from './component/BusinessDetails'
 import CategoryPage from './component/layout/categoryPage'
+import MyBookings from './component/MyBookings'
+import ProviderSettings from './pages/ProviderSettings'
 // import { BusinessList } from './pages/BusinessList'
 
 function App() {
@@ -29,6 +31,7 @@ function App() {
     const responseResult = await response?.json();
     console.log(responseResult);
     dispatch(setUser({
+      id:responseResult?.data?._id,
       name : responseResult?.data?.name || responseResult?.data?.personName,
       email : responseResult?.data?.email,
       profile_pic : responseResult?.data?.profile_pic,
@@ -53,7 +56,9 @@ function App() {
           <Route path='provider-details' element={<ProviderDetails />} />
           <Route path='details/:id' element={<BusinessDetails />} />
           <Route path='all-category-business/:category' element={<CategoryPage />} />
+          <Route path='mybookings' element={<MyBookings />} />
           <Route path='provider-dashboard' element={<ProviderDashBoard />} />
+          <Route path='provider-settings' element={<ProviderSettings />} />
           </Route>
           <Route path='*' element={<NotFound/>} />
         </Routes>

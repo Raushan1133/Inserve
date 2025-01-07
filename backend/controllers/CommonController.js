@@ -124,13 +124,17 @@ const changePassword = async(req,res)=>{
             return res.status(404).json({message:"User not found !",success:false});
           }
         }else{
+          const isMatch = await bcrypt.compareSync(curr_password,user.password);
           if(!isMatch){
             return res.status(400).json({message : "Old Password Not Matched",success:false})
           }
-          updatedUser = await userModel.findOneAndUpdate({email},{$set : {password : new_password}},{new:true})
+          const salt = await bcrypt.genSalt(10);
+          const hashedPassword = await bcrypt.hashSync(new_password,salt);
+          updatedUser = await userModel.findOneAndUpdate({email},{$set : {password : hashedPassword}},{new:true})
         }
         return res.status(200).json({message:"Password Updated Successfully !",success:true});
     } catch (error) {
+      console.log(error)
         return res.status(500).json({message:"Somthing went wrong !",success:false,error:error.message});
     }
 }

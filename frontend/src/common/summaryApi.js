@@ -63,5 +63,24 @@ export const summaryApi ={
     getBusinessByCategory : {
         url:import.meta.env.VITE_SERVER+"/api/business/get-business-by-category",
         method:"POST"
+    },
+
+    // Bookings
+    addBooking : {
+        url:import.meta.env.VITE_SERVER+"/api/booking/add-booking",
+        method:"POST"
+    },
+
+    getBookedSlot: {
+        url:import.meta.env.VITE_SERVER+"/api/booking/get-booked-slot",
+        method:"POST"
+    },
+    getBookings : {
+        url : import.meta.env.VITE_SERVER+"/api/booking/get-bookings",
+        method : "GET"
+    },
+    cancellBooking : {
+        url : import.meta.env.VITE_SERVER+"/api/booking/cancel-booking",
+        method : "POST"
     }
 }
