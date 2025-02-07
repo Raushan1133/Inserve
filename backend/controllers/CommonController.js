@@ -55,7 +55,7 @@ const login = async(req,res)=>{
 
 const logout = async(req,res)=>{
     try {
-        res.clearCookie("token", { path: "/", httpOnly: true, secure: true });
+        res.clearCookie("token", { path: "/", httpOnly: true, secure: true, sameSite : 'None' });
         res.status(200).json({message:"Logout success !",success:true});
     } catch (error) {
         res.status(500).json({message:"Somthing Went Wrong !"});
