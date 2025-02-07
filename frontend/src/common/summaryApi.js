@@ -29,6 +29,12 @@ export const summaryApi ={
         method:"GET" 
     },
 
+    // Get user by id
+    getUserById : {
+        url:import.meta.env.VITE_SERVER+"/api/user/get-user-by-id",
+        method:"POST" 
+    },
+
     // Update details
     updateUserDetails:{
         url:import.meta.env.VITE_SERVER+"/api/common/update-details",
@@ -37,6 +43,18 @@ export const summaryApi ={
     changePassword:{
         url:import.meta.env.VITE_SERVER+"/api/common/change-password",
         method:"PATCH" 
+    },
+
+    // Change business Details
+
+    fetchProviderDetails:{
+        url:import.meta.env.VITE_SERVER+"/api/business/get-provider-details",
+        method:"GET" 
+    },
+
+    updateBusinessDetails : {
+        url:import.meta.env.VITE_SERVER+"/api/business/update-business-details",
+        method:"PUT" 
     },
 
     // Manage categories list 
@@ -79,8 +97,33 @@ export const summaryApi ={
         url : import.meta.env.VITE_SERVER+"/api/booking/get-bookings",
         method : "GET"
     },
-    cancellBooking : {
-        url : import.meta.env.VITE_SERVER+"/api/booking/cancel-booking",
+    cancellBookingByUser : {
+        url : import.meta.env.VITE_SERVER+"/api/booking/cancel-booking-by-user",
+        method : "PATCH"
+    },
+    sendCancellationOtpByUser : {
+        url : import.meta.env.VITE_SERVER+"/api/booking/send-cancel-otp",
         method : "POST"
+    },
+
+    cancelBookingByProvider : {
+        url : import.meta.env.VITE_SERVER+"/api/booking/cancel-booking-by-provider",
+        method : "PATCH"
+    },
+
+    updateStatus : {
+        url : import.meta.env.VITE_SERVER+"/api/booking/update-status",
+        method : "PATCH"
+    },
+
+    // Product api's
+
+    uploadProduct : {
+        url : import.meta.env.VITE_SERVER+"/api/product/add-product",
+        method : "POST"
+    },
+    getProduct : {
+        url : import.meta.env.VITE_SERVER+"/api/product/get-product",
+        method : "GET"
     }
 }

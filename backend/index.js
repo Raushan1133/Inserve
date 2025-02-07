@@ -10,6 +10,7 @@ import cors from 'cors'
 import cookieParser from 'cookie-parser';
 import commonRouter from './routes/commonRoutes.js';
 import bookingRouter from './routes/bookingRoutes.js';
+import productRouter from './routes/productRoutes.js';
 configDotenv();
 connectDB();
 app.use(express.json())
@@ -25,6 +26,7 @@ app.use("/api/business",businessRouter);
 app.use("/api/categories",categoryRouter);
 app.use("/api/common",commonRouter);
 app.use("/api/booking",bookingRouter);
+app.use("/api/product",productRouter);
 
 app.get("/",(req,res)=>{
     try {

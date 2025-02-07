@@ -128,6 +128,7 @@ const changePassword = async(req,res)=>{
           if(!isMatch){
             return res.status(400).json({message : "Old Password Not Matched",success:false})
           }
+          
           const salt = await bcrypt.genSalt(10);
           const hashedPassword = await bcrypt.hashSync(new_password,salt);
           updatedUser = await userModel.findOneAndUpdate({email},{$set : {password : hashedPassword}},{new:true})

@@ -1,6 +1,8 @@
 import mongoose from "mongoose";
 import bookingModel from "../models/BookingModel.js";
 import userModel from "../models/UserModel.js";
+import { transporter } from "../configs/transporter.js";
+import otpModel from "../models/otpModel.js";
 
 const addBooking = async(req,res)=>{
     try {
@@ -40,27 +42,98 @@ const getBookings = async(req,res)=>{
        return res.status(200).json({message : "Success",success:true,data:bookings});
     } catch (error) {
         console.log(error)
-        return res.status(500).json({message:"Somthing went wrong !",success:false});
+        return res.status(500).json({message:"Somthing went wrong !",success:false});  
     }
 }
 
-const cancelBooking = async(req,res)=>{
+const cancelBookingByUser = async(req,res)=>{
     try {
+
         console.log(req.body)
-        if(req.body.businessId){
-            const response = await bookingModel.deleteOne({date:req.body.date,business : req.body.businessId, time:req.body.time});
-        }else{
-            const response = await bookingModel.deleteOne({date:req.body.date, user : req.body.userId, time:req.body.time});
-        }
-        res.status(200).json({message : "Service Cancelled Success !",success:true,error:false});
+        const {userId,businessId,date,time} = req.body;
+        console.log(req.body);
+        const response = await bookingModel.updateOne({date:date, user : userId, time:time,business:businessId},{$set : {bookingStatus : 'cancelled'}});
+        return res.status(200).json({message:"Booking Cancelled Success !",success:true,error:false});
     } catch (error) {
         console.log(error)
-        res.status(500).json({message : "Something went wrong !",success:false,error:true});
+        res.status(500).json({message : "Internal Server Error !",success:false,error:true});
+    }
+}
+
+const sendMailForUpdateBooking = async(req,res)=>{
+    try {
+        const {userId,email} = req.body;
+        console.log(req.body)
+        const otp = Math.floor(100000 + Math.random() * 900000); // Generate 6-digit OTP       
+            let info = await transporter.sendMail({
+                from : process.env.EMAIL_FROM,
+                to : email,
+                subject : "Raushan's Inserve project - Booking Cancellation Request From Service Provider !",
+                html: `
+                <p>Hello,</p>
+                <p>Your OTP for Booking Cancellation is: <strong>${otp}</strong></p>
+                <p>This OTP is valid for the next 10 minutes.</p>
+                <p>If you did not request this, please ignore this email.</p>
+                <br />
+                <p>Thank you,</p>
+                <p>InServe Team</p>
+              `,
+            })
+            await otpModel.create({
+                userId : userId,
+                otp : otp
+            })
+        res.status(200).json({message : "Otp sent to user successfully !",success:true,error:false});
+    } catch (error) {
+        res.status(500).json({message : "Internal Server error !",success:false,error:true});
+    }
+}
+
+const cancelBookingByProvider = async(req,res)=>{
+    try {
+        const {userId,otp,businessId,time,date} = req.body;
+        console.log(req.body);
+        console.log(otp)
+        if(!otp){
+            return res.status(401).json({message:"Please enter otp !",success:false})
+        }
+        const isValidOtp = await otpModel.findOne({userId,otp});
+        console.log("User otp",isValidOtp)
+        if(isValidOtp){
+            const response = await bookingModel.updateOne({date:date, user : userId, time:time,business:businessId,bookingStatus:"booked"},{$set : {bookingStatus : 'cancelled'}});
+            console.log("Deleted or not ! : ",response);
+            await otpModel.deleteOne({otp:otp})
+        }else{
+            return res.status(401).json({message:"Invalid Otp",success:false})
+        }
+         return res.status(200).json({message:"Booking Cancelled Success !",success:true,error:false});
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({message : "Internal server error !",success:false,error:true});
     }
 }
 
 const updateBooking = async(req,res)=>{
+    try {
+        const {userId,otp,businessId,time,date} = req.body;
+        console.log(otp)
+        if(!otp){
+            return res.status(401).json({message:"Please enter otp !",success:false})
+        }
+        const isValidOtp = await otpModel.findOne({userId,otp});
+        console.log("User otp",isValidOtp)
+        if(isValidOtp){
 
+            const response = await bookingModel.updateOne({date:date, user : userId, time:time,business:businessId,bookingStatus:"booked"},{$set : {bookingStatus : 'completed'}});
+            await otpModel.deleteOne({otp:otp})
+        }else{
+            return res.status(401).json({message:"Invalid Otp",success:false})
+        }
+         return res.status(200).json({message:"Booking Updated Success !",success:true,error:false});
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({message : "Internal server error !",success:false,error:true});
+    }
 }
 
-export  {addBooking,getBookedSlot,getBookings,cancelBooking,updateBooking}
+export  {addBooking,getBookedSlot,getBookings,cancelBookingByUser,updateBooking,sendMailForUpdateBooking,cancelBookingByProvider}

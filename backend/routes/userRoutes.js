@@ -1,9 +1,10 @@
 import express from 'express'
-import { findNearbyBusinesses, register } from '../controllers/userController.js';
+import { findNearbyBusinesses, getUserById, register } from '../controllers/userController.js';
 
 const userRouter = express.Router();
 
 userRouter.post("/register",register);
 userRouter.get("/find-businesses",findNearbyBusinesses);
+userRouter.post("/get-user-by-id",getUserById);
 
 export default userRouter

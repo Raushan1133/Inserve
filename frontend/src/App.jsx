@@ -19,6 +19,7 @@ import BusinessDetails from './component/BusinessDetails'
 import CategoryPage from './component/layout/categoryPage'
 import MyBookings from './component/MyBookings'
 import ProviderSettings from './pages/ProviderSettings'
+import UserProfile from './component/UserProfile'
 // import { BusinessList } from './pages/BusinessList'
 
 function App() {
@@ -55,6 +56,7 @@ function App() {
           <Route path='my-profile' element={<Profile />} />
           <Route path='provider-details' element={<ProviderDetails />} />
           <Route path='details/:id' element={<BusinessDetails />} />
+          <Route path='user/:id' element={<UserProfile />} />
           <Route path='all-category-business/:category' element={<CategoryPage />} />
           <Route path='mybookings' element={<MyBookings />} />
           <Route path='provider-dashboard' element={<ProviderDashBoard />} />

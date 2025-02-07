@@ -6,6 +6,7 @@ import { Clock, Mail, MapPin, NavigationIcon, NotebookIcon, Share, User } from '
 import BookingSection from './BookingSection';
 import { useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
+import { getAddressFromCoordinates } from '@/helper/getAddressFromCoordinates';
 
 
 const BusinessDetails = () => {
@@ -48,10 +49,44 @@ const BusinessDetails = () => {
       console.log(error)
   }
   }
+
+    const [Address,setAddress] = useState('');
+    const getAddressFromCoordinate = async()=>{
+      const data  = await getAddressFromCoordinates(business?.location?.coordinates[0],business?.location?.coordinates[1]);
+      console.log(data)
+      setAddress(data);
+    }
   // Get Suggested business List
   useEffect(()=>{
     getAllBusinessByCategory();
+    getAddressFromCoordinate();
   },[business])
+
+  const [addresses, setAddresses] = useState({});
+
+  // Function to fetch addresses
+  const getAddressFromCoordinateForSuggestions = async (latitude, longitude, id) => {
+    try {
+      const data = await getAddressFromCoordinates(latitude, longitude);
+      setAddresses((prev) => ({ ...prev, [id]: data })); // Store each address using business ID
+    } catch (error) {
+      console.error("Error fetching address:", error);
+    }
+  };
+
+  useEffect(() => {
+    if (suggestedBusinessList?.length > 0) {
+      suggestedBusinessList.forEach((item) => {
+        if (item?.location?.coordinates) {
+          getAddressFromCoordinateForSuggestions(
+            item.location.coordinates[0],
+            item.location.coordinates[1],
+            item._id
+          );
+        }
+      });
+    }
+  }, [suggestedBusinessList]);
 
   useEffect(()=>{
     getBusinessById();
@@ -66,7 +101,7 @@ const BusinessDetails = () => {
       <div className='flex flex-col items-baseline gap-3 mt-4 md:mt-0'>
         <h2 className='text-primary bg-purple-200 px-2 p-1 rounded-full text-lg'>{ business?.category?.name}</h2>
         <h2 className='font-semibold text-lg md:text-2xl'>{ business?.businessName}</h2>
-        <h2 className='flex text-gray-500 gap-2 text-lg'><MapPin/> { business?.location?.coordinates[0]}</h2>
+        <h2 className='flex text-gray-500 gap-2 text-lg'><MapPin/> { Address}</h2>
         <h2 className='flex text-gray-500 gap-2 text-lg'><Mail/> { business?.email}</h2>
       </div>
       <div className='flex flex-col mt-3 lg:mt-0 items-baseline lg:items-end gap-3'>
@@ -118,7 +153,8 @@ const BusinessDetails = () => {
               <div>
               <h2 className='font-bold'>{item?.businessName}</h2>
               <h2 className='text-primary'>{item?.personName}</h2>
-              <h2 className='text-gray-500'>{item?.location?.coordinates[0]}</h2>
+              {/* <h2 className='text-gray-500'>{item?.location?.coordinates[0]}</h2> */}
+              <h2 className='text-gray-500 line-clamp-1'>{addresses[item._id] || "Fetching address..."}</h2>
               </div>
             </Link>
           ))
@@ -136,7 +172,7 @@ const BusinessDetails = () => {
               <div>
               <h2 className='font-bold'>{item?.businessName}</h2>
               <h2 className='text-primary'>{item?.personName}</h2>
-              <h2 className='text-gray-500'>{item?.location?.coordinates[0]}</h2>
+              <h2 className='text-gray-500'>{addresses[item._id] || "Fetching address..."}</h2>
               </div>
             </Link>
           ))

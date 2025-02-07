@@ -63,7 +63,19 @@ const findNearbyBusinesses = async (req,res) => {
       console.error("Error finding nearby businesses:", error);
     }
   };
+
+  const getUserById = async(req,res)=>{
+    try {
+      const {id} = req.body;
+      const data = await userModel.findById(id)
+      return res.status(200).json({"message":"success","success":true,data:data});
+
+    } catch (error) {
+      console.log(error)
+      return res.status(400).json({message:"Server is down !",success:false});
+    }
+  }
   
   
 
-export  {register, findNearbyBusinesses}
+export  {register, findNearbyBusinesses,getUserById}

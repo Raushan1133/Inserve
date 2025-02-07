@@ -102,23 +102,39 @@ const ProviderDetails = () => {
     e.preventDefault()
     const apiKey = "";  // Replace with your API key
     const encodedAddress = encodeURIComponent(manualAddress);
+    const token = import.meta.env.VITE_MAPBOX_TOKEN;
+    console.log(token)
 
     try {
       console.log("Encoded address : ", encodedAddress)
-        const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${manualAddress}`);
+      const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(manualAddress)}.json?country=IN&limit=1&access_token=${token}`;
+
+        const response = await fetch(url);
         const data = await response.json();
+        
    
         console.log(data);
-      if (data.status === "OK") {
-        const { lat, lng } = data.results[0].geometry.location;
-        setLocation({ latitude: lat, longitude: lng });
-        console.log(location.latitude,"  ",location.longitude)
+        if (data?.features?.length > 0) {
+          const { center } = data.features[0]; // center[0] = long, center[1] = lat
+          const latitude = center[1];
+          const longitude = center[0];
+
+          console.log("Latitude:", latitude, "Longitude:", longitude);
+
+          // Send to backend
+          // await sendToBackend(latitude, longitude, address);
+          setLocation({
+            latitude:latitude,
+            longitude : longitude
+          })
+          toast.success("Location Captured Success")
+          console.log(location)
       } else {
-        console.log("Could not find location for the entered address.");
+          toast.error("No location found.");
       }
     } catch (err) {
       console.log(err)
-      console.log("Error fetching location from address.");
+      toast.error("Error fetching location from address.");
     }
   };
   
@@ -280,7 +296,7 @@ const ProviderDetails = () => {
     <>
     <div className='md:mx-10 mx-5 relative'>
       <div className="flex justify-center">
-        <form className="max-w-xl shadow-2xl  md:p-10 p-5  flex flex-col gap-2 ">
+        <form className="max-w-xl shadow-2xl dark:bg-gray-900  md:p-10 p-5  flex flex-col gap-2 ">
         <h1 className='text-primary font-semibold'>Please provide some important information related to your business</h1>
         {/* Business details - business name */}
             <div >

@@ -15,10 +15,12 @@ import toast from "react-hot-toast";
 import { summaryApi } from "@/common/summaryApi";
 
 const MyBookings = () => {
+  const user = useSelector(state=>state.user)
   const [bookings, setBookings] = useState([]);
-
+  const[loading,setLoading] = useState(true);
   const fetchBookings = async () => {
     try {
+      setLoading(true)
       const resp = await fetch(summaryApi.getBookings.url, {
         method: summaryApi.getBookings.method,
         headers: {
@@ -37,6 +39,8 @@ const MyBookings = () => {
     } catch (error) {
       console.log(error);
       toast.error("Error while fetching bookings !");
+    }finally{
+      setLoading(false);
     }
   };
 
@@ -44,12 +48,13 @@ const MyBookings = () => {
     e.stopPropagation();
     e.preventDefault();
     try {
-      const resp = await fetch(summaryApi.cancellBooking.url,{
-        method : summaryApi.cancellBooking.method,
+      const resp = await fetch(summaryApi.cancellBookingByUser.url,{
+        method : summaryApi.cancellBookingByUser.method,
         headers: {
           "content-type" : "application/json"
         },
         body : JSON.stringify({
+          userId : user?.id,
           businessId : businessId,
           date : date,
           time : time
@@ -87,7 +92,8 @@ const MyBookings = () => {
             </CardHeader>
             <CardContent className="space-y-2 shadow-sm ">
               <div className="flex flex-col items-center gap-5 ">
-                {bookings?.map(
+               {
+                !loading && bookings.length == 0  ? "No History Found" :  bookings?.map(
                   (item, index) =>
                     item?.bookingStatus !== "completed" && (
                       <Link
@@ -114,7 +120,9 @@ const MyBookings = () => {
                         <hr />
                       </Link>
                     )
-                )}
+                )
+               }
+                
               </div>
             </CardContent>
             <CardFooter className="w-full"></CardFooter>
@@ -128,33 +136,35 @@ const MyBookings = () => {
             </CardHeader>
             <CardContent className="space-y-2 shadow-none">
               <div className="flex flex-col items-center gap-5 ">
-                {bookings?.map(
-                  (item, index) =>
-                    item?.bookingStatus === "completed" && (
-                      <Link
-                        to={`/details/${item?.business?._id}`}
-                        key={index}
-                        className="flex flex-wrap dark:bg-gray-900 items-center cursor-pointer w-full justify-between scrollbar-none shadow rounded "
-                      >
-                        <div>
-                          <img
-                            src={item.business.profile_pic}
-                            alt="busienss"
-                            className="h-20 w-20  rounded aspect-square bg-cover"
-                          />
-                        </div>
-                        <p>{item.date}</p>
-                        <p>{item.time}</p>
-                        <p className="line-clamp-1">
-                          {item.business.businessName}
-                        </p>
-                        <p className="bg-green-500 text-white px-2 p-1 rounded-full">
-                          {item.bookingStatus}
-                        </p>
-                        <hr />
-                      </Link>
-                    )
-                )}
+                {
+                  !loading && bookings.length ===0 ? "No History Found" : bookings?.map(
+                    (item, index) =>
+                      item?.bookingStatus === "completed" && (
+                        <Link
+                          to={`/details/${item?.business?._id}`}
+                          key={index}
+                          className="flex flex-wrap dark:bg-gray-900 items-center cursor-pointer w-full justify-between scrollbar-none shadow rounded "
+                        >
+                          <div>
+                            <img
+                              src={item.business.profile_pic}
+                              alt="busienss"
+                              className="h-20 w-20  rounded aspect-square bg-cover"
+                            />
+                          </div>
+                          <p>{item.date}</p>
+                          <p>{item.time}</p>
+                          <p className="line-clamp-1">
+                            {item.business.businessName}
+                          </p>
+                          <p className="bg-green-500 text-white px-2 p-1 rounded-full">
+                            {item.bookingStatus}
+                          </p>
+                          <hr />
+                        </Link>
+                      )
+                  )
+                }
               </div>
             </CardContent>
             <CardFooter className="w-full"></CardFooter>

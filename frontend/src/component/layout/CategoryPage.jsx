@@ -54,7 +54,7 @@ const CategoryPage = () => {
     <div className='flex overflow-x-auto  gap-3 mt-3'>
       {
         categories?.map((item,index)=>(
-          <Link to={"all-category-business/"+item?._id}  key={index}  className={`flex flex-col justify-center items-center gap-2 p-1 rounded-sm md:hidden border cursor-pointer  hover:text-primary hover:shadow-md hover:shadow-primary transition-all ease-in-out ${item?.name === businessList[0]?.category?.name && "border-primary shadow-primary shadow-sm text-primary"}`}>
+          <Link to={"/all-category-business/"+item?._id}  key={index}  className={`flex flex-col justify-center items-center gap-2 p-1 rounded-sm md:hidden border cursor-pointer  hover:text-primary hover:shadow-md hover:shadow-primary transition-all ease-in-out ${item?.name === businessList[0]?.category?.name && "border-primary shadow-primary shadow-sm text-primary"}`}>
             <img src={item.icon} alt='icon' className='h-16 w-16 object-cover'></img>
             <h2 className='text-center'>{item.name}</h2>
           </Link>

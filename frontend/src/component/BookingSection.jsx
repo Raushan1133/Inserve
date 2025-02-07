@@ -108,7 +108,7 @@ const BookingSection = ({ children, business }) => {
     }
   }
   const isBookedSlot = (time)=>{
-   return bookedSlot?.find(item=>item?.time === time)
+   return bookedSlot?.find(item=>item?.time === time && item.bookingStatus === 'booked')
   }
 
   useEffect(()=>{

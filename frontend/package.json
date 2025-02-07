@@ -19,6 +19,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "date-fns": "^3.6.0",
+    "input-otp": "^1.4.2",
     "leaflet": "^1.9.4",
     "lucide-react": "^0.464.0",
     "moment": "^2.30.1",

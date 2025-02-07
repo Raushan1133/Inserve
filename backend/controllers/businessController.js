@@ -83,6 +83,30 @@ const getBusinessByCategory = async(req,res)=>{
 
 }
 
+const getProviderDetails = async(req,res)=>{
+  try {
+    console.log(req.user)
+    const data = await businessModel.findById(req.user.userId).select('-password').populate('category');
+    console.log(data);
+    return res.status(200).json({message:"Success",success:true,data});
+  } catch (error) {
+    return res.status(500).json({message:"Server is down !",success:false});
+  }
+}
 
-export {addBusiness,getAllBusiness,getBusinessById, getBusinessByCategory}
+const updateBusinessDetails = async(req,res)=>{
+  try {
+    const data = req.body;
+    const response = await businessModel.findByIdAndUpdate(req.user.userId,data);
+    console.log(response)
+    return res.status(200).json({message:"Details Updated Successfully !",success:true,data:response});
+  } 
+  catch (error) {
+    return res.status(500).json({message:"Server is down !",success:false});
+    
+  }
+}
+
+
+export {addBusiness,getAllBusiness,getBusinessById, getBusinessByCategory,updateBusinessDetails,getProviderDetails}
 
