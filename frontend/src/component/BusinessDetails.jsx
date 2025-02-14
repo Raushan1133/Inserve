@@ -7,6 +7,7 @@ import BookingSection from './BookingSection';
 import { useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
 import { getAddressFromCoordinates } from '@/helper/getAddressFromCoordinates';
+import ProductPage from '@/pages/ProductPage';
 
 
 const BusinessDetails = () => {
@@ -178,6 +179,7 @@ const BusinessDetails = () => {
           ))
         }
       </div>
+      <ProductPage />
   </div>
   )
 }

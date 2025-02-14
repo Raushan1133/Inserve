@@ -125,5 +125,16 @@ export const summaryApi ={
     getProduct : {
         url : import.meta.env.VITE_SERVER+"/api/product/get-product",
         method : "GET"
+    },
+    getProviderProduct : {
+        url : import.meta.env.VITE_SERVER+"/api/product/get-provider-products",
+        method : "POST"
+    },
+
+    // Cart functionality
+    addToCart : {
+        url : import.meta.env.VITE_SERVER+"/api/cart/add-to-cart",
+        method : "POST"
     }
+
 }

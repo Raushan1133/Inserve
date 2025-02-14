@@ -35,4 +35,15 @@ const getProduct = async(req,res)=>{
     }
 }
 
-export  {addProduct,getProduct}
+const getProviderProduct = async(req,res)=>{
+    try {
+        const {providerId} = req.body;
+        const data = await productModel.find({productOwner : providerId});
+        return res.status(200).json({message:"Product fetched success !",success:true,error:false,data});
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({message:"Server is down !",success:false,error:true});
+    }
+}
+
+export  {addProduct,getProduct,getProviderProduct}

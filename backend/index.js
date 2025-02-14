@@ -11,6 +11,7 @@ import cookieParser from 'cookie-parser';
 import commonRouter from './routes/commonRoutes.js';
 import bookingRouter from './routes/bookingRoutes.js';
 import productRouter from './routes/productRoutes.js';
+import cartRouter from './routes/cartRoutes.js';
 configDotenv();
 connectDB();
 app.use(express.json())
@@ -27,6 +28,7 @@ app.use("/api/categories",categoryRouter);
 app.use("/api/common",commonRouter);
 app.use("/api/booking",bookingRouter);
 app.use("/api/product",productRouter);
+app.use("/api/cart",cartRouter);
 
 app.get("/",(req,res)=>{
     try {

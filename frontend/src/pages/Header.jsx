@@ -17,7 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { removeUser } from "../features/userSlice";
 import toast from "react-hot-toast";
 import { summaryApi } from "@/common/summaryApi";
-import { BookCheck, LogOut, Settings, User } from "lucide-react";
+import { BookCheck, LogOut, Settings, ShoppingCartIcon, User } from "lucide-react";
 
 const Header = () => {
   // const { user } = useUser();
@@ -51,8 +51,14 @@ const Header = () => {
         <img src={Logo} alt="logo" className="h-[80px] w-[80px]" />
       </Link>
 
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-5">
         <ModeToggle />
+        {
+          user?.name && <div className="cursor-pointer">
+            <span className="relative"><ShoppingCartIcon  /></span>
+            <div className="bg-primary absolute top-5 ml-3 text-white h-6 w-6 text-center rounded-full">3</div>
+          </div>
+        }
 
         {!user?.name ? (
           

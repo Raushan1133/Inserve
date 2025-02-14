@@ -119,7 +119,54 @@ const ProductPage = () => {
   return (
     <>
       <div className="flex justify-end my-10">
-        {products.length >= 1 && <Button>Upload Product</Button>}
+        {products.length >= 1 &&               <Dialog className="mx-5">
+                <DialogTrigger>
+                  <Button className="my-5">Upload Products</Button>
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>Enter Product Details</DialogTitle>
+                  </DialogHeader>
+                  <Input placeholder="Product Name" name="productName" value={productData.productName} onChange={(e)=>handleOnChange(e)} className="my-1" />
+                  <Input placeholder="Product Description" name="productDescription" value={productData.productDescription} onChange={(e)=>handleOnChange(e)} className="my-1" />
+                  <Input
+                    placeholder="Product Cost Price"
+                    className="my-1 appearance-none  [&::-webkit-inner-spin-button]:hidden 
+                 [&::-webkit-outer-spin-button]:hidden 
+                 [-moz-appearance:textfield]"
+                    type="number"
+                    name="productCostPrice" value={productData.productCostPrice} onChange={(e)=>handleOnChange(e)}
+                  />
+                  <Input
+                    placeholder="Product Selling Price"
+                    className="my-1 appearance-none  [&::-webkit-inner-spin-button]:hidden 
+                 [&::-webkit-outer-spin-button]:hidden 
+                 [-moz-appearance:textfield]"
+                    type="number"
+                    name="productSellingPrice" value={productData.productSellingPrice} onChange={(e)=>handleOnChange(e)}
+                  />
+
+                  <Input placeholder="Category ex :- shoe" type="text" id="productCategory" name="productCategory" value={productData.productCategory} onChange={(e)=>handleOnChange(e)} />
+
+                  <div>
+                    <div  htmlFor="image" className="py-5 w-full border rounded flex items-center justify-center"> {imgLoading ? <Loader2Icon className="animate-spin dark:text-white" /> : <label htmlFor="image"  className="border flex gap-1 px-2 py-2 rounded border-primary cursor-pointer hover:bg-primary hover:text-white transition-all" >Upload Images <UploadCloud/> </label>} </div>
+                    <input type="file"  name="image" id="image" className="hidden" onChange={(e)=>handleImageUpload(e)} />
+                  </div>
+                  <div className="flex gap-5 flex-wrap">
+                    {
+                        productData.productImages.length >0 && productData.productImages.map((item,index)=>(
+                            <div className="relative" key={index}>
+                                <div>
+                                <img src={item} alt="images" className="aspect-square h-20 w-20" />
+                                <span className="absolute right-0 bottom-1 cursor-pointer" ><MdDelete className="text-red-500 h-7 w-7" onClick={()=>handleRemoveImage(index)} /></span>
+                                </div>
+                            </div>
+                        ))
+                    }
+                  </div>
+                  <Button onClick={(e)=>handleSubmit(e)}>Add Product</Button>
+                </DialogContent>
+              </Dialog>}
       </div>
       <div className="flex items-center justify-center my-10">
         <div>
