@@ -77,5 +77,4 @@ businessSchema.pre("save",async function(next){
 })
 
 const businessModel = mongoose.model("Business", businessSchema);
-
 export default businessModel;

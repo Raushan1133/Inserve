@@ -43,7 +43,7 @@ const AskType = () => {
               if(responseResult?.success){
                 toast.success(responseResult?.message);
                     dispatch(setUser({
-                      id:responseResult?.data?._id,
+                      id:responseResult?.data?._id, 
                       name : responseResult?.data?.name,
                       email : responseResult?.data?.email,
                       profile_pic : responseResult?.data?.profile_pic,

@@ -1,4 +1,3 @@
-import mongoose from "mongoose";
 import bookingModel from "../models/BookingModel.js";
 import userModel from "../models/UserModel.js";
 import { transporter } from "../configs/transporter.js";

@@ -135,6 +135,29 @@ export const summaryApi ={
     addToCart : {
         url : import.meta.env.VITE_SERVER+"/api/cart/add-to-cart",
         method : "POST"
-    }
+    },
 
+    getCartItems : {
+        url : import.meta.env.VITE_SERVER+"/api/cart/get-cart",
+        method : "GET"
+    },
+    deleteCartItems : {
+        url : import.meta.env.VITE_SERVER+"/api/cart/delete-cart",
+        method : "POST"
+    },
+
+    increaseQty : {
+        url : import.meta.env.VITE_SERVER+"/api/cart/increase-qty",
+        method : "PATCH"
+    },
+    decreaseQty : {
+        url : import.meta.env.VITE_SERVER+"/api/cart/decrease-qty",
+        method : "PATCH"
+    },
+
+    // Find Businesses by range
+    searchBusiness : {
+        url : import.meta.env.VITE_SERVER+"/api/user/find-businesses",
+        method : "POST"
+    }
 }

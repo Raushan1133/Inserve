@@ -11,7 +11,7 @@ import ProviderDetails from './RegLogin/ProviderDetails'
 import BusinessList from './pages/BusinessList'
 import ProviderDashBoard from './providerPages/ProviderDashBoard'
 import { summaryApi } from './common/summaryApi'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setUser } from './features/userSlice'
 import Profile from './component/Profile'
@@ -20,6 +20,10 @@ import CategoryPage from './component/layout/CategoryPage'
 import MyBookings from './component/MyBookings'
 import ProviderSettings from './pages/ProviderSettings'
 import UserProfile from './component/UserProfile'
+import toast from 'react-hot-toast'
+import Context from './utils/Context'
+import CartPage from './pages/CartPage'
+import MapComponent from './component/MapBox'
 // import { BusinessList } from './pages/BusinessList'
 
 function App() {
@@ -40,11 +44,39 @@ function App() {
     }))
   }
   const user = useSelector(state => state.user);
+
+  const addToCart = async(productId,productOwner)=>{
+    try {
+      
+    } catch (error) {
+      
+    }
+  }
+  const [cartItems,setCartItems] = useState([]);
+  const getCartItems = async()=>{
+    try {
+      const response = await fetch(summaryApi.getCartItems.url,{credentials :'include'});
+      const responseData = await response.json();
+      if(responseData?.success){
+        setCartItems(responseData?.data);
+      }
+      console.log(responseData);
+    } catch (error) {
+      toast.error("Something went wrong !");
+    }
+  }
+
+  // const context = context();
+
   useEffect(()=>{
     getUserDetails();
+    getCartItems()
   },[user])
   return (
     <>
+        <Context.Provider
+          value={{cartItems,getCartItems,addToCart}}
+        >
         <BrowserRouter >
         <Routes>
           <Route path='/' element={<Layout/>}>
@@ -61,10 +93,13 @@ function App() {
           <Route path='mybookings' element={<MyBookings />} />
           <Route path='provider-dashboard' element={<ProviderDashBoard />} />
           <Route path='provider-settings' element={<ProviderSettings />} />
+          <Route path='cart' element={<CartPage />} />
+          <Route path='navigate-to-provider' element={<MapComponent />} />
           </Route>
           <Route path='*' element={<NotFound/>} />
         </Routes>
       </BrowserRouter>
+      </Context.Provider>
     </>
   )
 }

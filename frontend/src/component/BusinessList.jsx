@@ -34,7 +34,7 @@ const BusinessList = ({ isLoading, title, businessList }) => {
   return (
     <div>
       <h1 className="my-5 font-bold text-4xl text-primary">{title}</h1>
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-2">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 md:gap-6 gap-2  mt-2">
         {isLoading
           ? [1, 2, 3, 4, 5, 6, 7, 8].map((item, idx) => (
               <div
@@ -57,11 +57,11 @@ const BusinessList = ({ isLoading, title, businessList }) => {
                   width={500}
                 />
                 <div className="p-3 flex flex-col items-baseline gap-1">
-                  <h1 className="bg-cyan-400 text-sm p-1 px-2 mt-1 rounded-full">
+                  <h1 className="bg-cyan-400 line-clamp-1  text-sm p-1 px-2 mt-1 rounded-full">
                     {item?.category?.name}
                   </h1>
-                  <h2 className="font-semibold text-ellipsis text-sm md:text-lg flex items-center gap-1">
-                    <Store /> <span>{item?.businessName}</span>
+                  <h2 className="font-semibold  text-sm md:text-lg flex items-center gap-1">
+                    <Store /> <span className='line-clamp-1'>{item?.businessName}</span>
                   </h2>
                   <h2 className="text-primary text-ellipsis text-sm md:text-lg flex items-center gap-1">
                     <User />
@@ -69,7 +69,7 @@ const BusinessList = ({ isLoading, title, businessList }) => {
                   </h2>
                   <h2 className="text-gray-500 text-ellipsis text-sm md:text-lg flex items-center gap-1">
                     <MapPin />
-                    <span>
+                    <span className='line-clamp-3'> 
                       {addresses[item._id] || "Fetching address..."}
                     </span>
                   </h2>

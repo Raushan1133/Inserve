@@ -1,6 +1,6 @@
 import { summaryApi } from "@/common/summaryApi";
 import { ShoppingBag } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import {
@@ -21,12 +21,15 @@ import {
 } from "@/components/ui/carousel";
 import { Button } from "@/components/ui/button";
 import toast from "react-hot-toast";
+import Context from "@/utils/Context";
 
 const ProductPage = () => {
   const user = useSelector(state=>state.user);
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true); // State for loading
   const params = useParams();
+
+  const {getCartItems} = useContext(Context)
 
   const fetchProducts = async () => {
     setIsLoading(true); // Set loading to true when fetching starts
@@ -66,6 +69,7 @@ const ProductPage = () => {
         const responseData = await response.json();
         if(responseData?.success){
           toast.success(responseData?.message);
+          getCartItems();
         }else{
           toast.error(responseData?.message);
         }
@@ -83,8 +87,12 @@ const ProductPage = () => {
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-4">Products You Might Like</h1>
-      <p className="text-gray-600 mb-8">Assured Delivery Within 10 Minutes</p>
+      {
+        products.length > 0 && <div className="">
+        <h1 className="text-3xl font-bold mb-4">Products You Might Like</h1>
+        <p className="text-gray-600 mb-8">Assured Delivery Within 10 Minutes</p>
+        </div>
+      }
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {isLoading
@@ -107,7 +115,7 @@ const ProductPage = () => {
                   {" "}
                   <div
                     key={product.productName}
-                    className="bg-white cursor-pointer rounded-lg shadow-md overflow-hidden transform transition duration-500 hover:scale-105"
+                    className="bg-white cursor-pointer dark:bg-gray-900 rounded-lg shadow-md overflow-hidden transform transition duration-500 hover:scale-105"
                   >
                     <div className="relative h-48">
                       {product.productImages.length > 0 ? (
@@ -127,13 +135,18 @@ const ProductPage = () => {
                       <p className="text-gray-600 text-sm line-clamp-2">
                         {product.productDescription}
                       </p>
-                      <div className="mt-3 flex justify-between items-center">
+                      <div className="mt-3 gap-2 flex justify-between items-center">
+                        <div className="flex gap-2">
                         <span className="text-xl font-bold">
-                          ${product.productSellingPrice}
+                        ₹{product.productSellingPrice}
                         </span>
-                        <button onClick={(e)=>addToCart(e,product._id)} className="bg-purple-600 flex gap-2 text-white px-4 py-2 rounded-md hover:bg-purple-700 focus:outline-none focus:ring focus:ring-purple-300">
+                        <span className="text-xl line-through text-gray-400 font-bold">
+                        ₹{product.productCostPrice}
+                        </span>
+                        </div>
+                        <Button onClick={(e)=>addToCart(e,product._id)} className="bg-purple-600 flex gap-2 text-white px-4 py-2 rounded-md hover:bg-purple-700 focus:outline-none focus:ring focus:ring-purple-300">
                           Add to Cart <ShoppingBag />
-                        </button>
+                        </Button>
                       </div>
                     </div>
                   </div>
@@ -155,8 +168,8 @@ const ProductPage = () => {
                                         <div>
                                           <img
                                             src={item}
-                                            alt=""
-                                            className="aspect-square"
+                                            alt="images"
+                                            className="aspect-square rounded-md"
                                           />
                                         </div>
                                       </CardContent>

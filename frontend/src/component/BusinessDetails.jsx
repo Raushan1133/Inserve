@@ -1,7 +1,7 @@
 import { summaryApi } from '@/common/summaryApi';
 import { Button } from '@/components/ui/button';
 import React, { useEffect, useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { Clock, Mail, MapPin, NavigationIcon, NotebookIcon, Share, User } from 'lucide-react'
 import BookingSection from './BookingSection';
 import { useSelector } from 'react-redux';
@@ -88,6 +88,8 @@ const BusinessDetails = () => {
       });
     }
   }, [suggestedBusinessList]);
+  
+  const navigate = useNavigate();
 
   useEffect(()=>{
     getBusinessById();
@@ -120,7 +122,7 @@ const BusinessDetails = () => {
         <Button><NotebookIcon/>Book Service</Button>
         </BookingSection> : <Button onClick={()=>{toast.error("Please Login First !")}}><NotebookIcon/>Book Service</Button>
       }
-      <Button className="flex items-center text-center">Start <NavigationIcon /></Button>
+      <span onClick={()=>navigate("/navigate-to-provider",{state:{lat:business?.location?.coordinates[0],lon:business?.location?.coordinates[1]}})} className="flex items-center text-center cursor-pointer bg-primary rounded-md px-2 py-1 text-white">Start <NavigationIcon /></span>
     </div>
     <div className='grid grid-cols-4 mt-10 gap-10'>
 

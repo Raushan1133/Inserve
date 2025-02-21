@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import CategorySidebar from './CategorySidebar'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { summaryApi } from '@/common/summaryApi'
 import BusinessList from '../BusinessList'
 import toast from 'react-hot-toast'
@@ -9,6 +9,11 @@ const CategoryPage = () => {
     const params = useParams();
     const [businessList,setBusinessList] = useState([]);
     const [isLoading,setIsLoading] = useState(false);
+    const navigate = useNavigate();
+
+const handleCategoryClick = (categoryId) => {
+  navigate(`/all-category-business/${categoryId}`);
+};
     // sidebar category
     const[categories,setCategories] = useState([]);
     const fetchCategories = async()=>{
@@ -54,10 +59,10 @@ const CategoryPage = () => {
     <div className='flex overflow-x-auto  gap-3 mt-3'>
       {
         categories?.map((item,index)=>(
-          <Link to={"/all-category-business/"+item?._id}  key={index}  className={`flex flex-col justify-center items-center gap-2 p-1 rounded-sm md:hidden border cursor-pointer  hover:text-primary hover:shadow-md hover:shadow-primary transition-all ease-in-out ${item?.name === businessList[0]?.category?.name && "border-primary shadow-primary shadow-sm text-primary"}`}>
-            <img src={item.icon} alt='icon' className='h-16 w-16 object-cover'></img>
-            <h2 className='text-center'>{item.name}</h2>
-          </Link>
+          <div onClick={()=>handleCategoryClick(item?._id)}  key={index}  className={`flex flex-col justify-center items-center gap-2 p-1 rounded-sm md:hidden border cursor-pointer  hover:text-primary hover:shadow-md hover:shadow-primary transition-all ease-in-out ${item?.name === businessList[0]?.category?.name && "border-primary shadow-primary shadow-sm text-primary"}`}>
+            <img src={item.icon} alt='icon' className='h-16 w-16 aspect-square object-cove'></img>
+            <h2 className='text-center line-clamp-1'>{item.name}</h2>
+          </div>
         ))
       }
       </div>
@@ -68,10 +73,10 @@ const CategoryPage = () => {
       <div className='flex flex-col gap-3 mt-3'>
       {
         categories?.map((item,index)=>(
-          <Link to={"/all-category-business/"+item?._id} onClick={()=>setTitle(item?.name)}  key={index}  className={`flex gap-2 p-4 border rounded-lg  cursor-pointer  hover:text-primary hover:shadow-md hover:shadow-primary transition-all ease-in-out ${item?.name === businessList[0]?.category?.name && "border-primary shadow-primary shadow-md text-primary"}`}>
+          <div to={"/all-category-business/"+item?._id} onClick={()=>{handleCategoryClick(item?._id)}}  key={index}  className={`flex gap-2 p-4 border rounded-lg  cursor-pointer  hover:text-primary hover:shadow-md hover:shadow-primary transition-all ease-in-out ${item?.name === businessList[0]?.category?.name && "border-primary shadow-primary shadow-md text-primary"}`}>
             <h2>{item.name}</h2>
             <img src={item.icon} alt='icon' height={30} width={30}></img>
-          </Link>
+          </div>
         ))
       }
       </div>

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import Logo from "../assets/logo.png";
 import { Button } from "../components/ui/button";
 import { ModeToggle } from "../components/Toggle";
@@ -18,10 +18,14 @@ import { removeUser } from "../features/userSlice";
 import toast from "react-hot-toast";
 import { summaryApi } from "@/common/summaryApi";
 import { BookCheck, LogOut, Settings, ShoppingCartIcon, User } from "lucide-react";
+import context from "@/utils/Context";
 
 const Header = () => {
   // const { user } = useUser();
   const sdk = useDescope();
+
+  const{cartItems} = useContext(context);
+  // console.log(cartItems);
   const user = useSelector((state)=> state.user)
   const dispatch = useDispatch()
   // useEffect(() => {
@@ -46,7 +50,7 @@ const Header = () => {
     }
   }
   return (
-    <div className="flex backdrop-blur z-10 bg-background/50  items-center justify-between py-1 top-0 sticky shadow-md px-5 md:px-16">
+    <div className="flex backdrop-blur z-50 bg-background/50  items-center justify-between py-1 top-0 sticky shadow-md px-5 md:px-16">
       <Link to={"/"}>
         <img src={Logo} alt="logo" className="h-[80px] w-[80px]" />
       </Link>
@@ -54,10 +58,10 @@ const Header = () => {
       <div className="flex items-center gap-5">
         <ModeToggle />
         {
-          user?.name && <div className="cursor-pointer">
+          user?.name && user.type === "seeker" && <Link to={"/cart"} className="cursor-pointer">
             <span className="relative"><ShoppingCartIcon  /></span>
-            <div className="bg-primary absolute top-5 ml-3 text-white h-6 w-6 text-center rounded-full">3</div>
-          </div>
+            <div className="bg-primary absolute top-5 ml-3 text-white h-6 w-6 text-center rounded-full">{cartItems?.length}</div>
+          </Link>
         }
 
         {!user?.name ? (
