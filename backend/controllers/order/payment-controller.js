@@ -13,7 +13,7 @@ const paymentController =async (req,res) => {
             billing_address_collection :'auto',
             shipping_options: [
                 {
-                    shipping_rate:'shr_1PkUVVHVWrUNwtS4DxPGB2PK'
+                    shipping_rate:'shr_1QvGHeC41AYdqM6tvqHi8Ffv'
                 }
             ],
             customer_email:user.email,
