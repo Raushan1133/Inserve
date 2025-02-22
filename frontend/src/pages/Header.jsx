@@ -17,7 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { removeUser } from "../features/userSlice";
 import toast from "react-hot-toast";
 import { summaryApi } from "@/common/summaryApi";
-import { BookCheck, LogOut, Settings, ShoppingCartIcon, User } from "lucide-react";
+import { BookCheck, HistoryIcon, ListOrdered, LogOut, Settings, ShoppingCartIcon, User } from "lucide-react";
 import context from "@/utils/Context";
 
 const Header = () => {
@@ -87,6 +87,20 @@ const Header = () => {
             <DropdownMenuItem className="cursor-pointer" >
             <User />
             <span >Profile</span>
+          </DropdownMenuItem>
+            </Link>
+              <DropdownMenuSeparator  />
+              <Link  to={"/order"}>
+            <DropdownMenuItem className="cursor-pointer" >
+            <ListOrdered />
+            <span >My Orders</span>
+          </DropdownMenuItem>
+            </Link>
+              <DropdownMenuSeparator  />
+              <Link  to={"/order-history"}>
+            <DropdownMenuItem className="cursor-pointer" >
+            <HistoryIcon />
+            <span >Order History</span>
           </DropdownMenuItem>
             </Link>
               <DropdownMenuSeparator  />

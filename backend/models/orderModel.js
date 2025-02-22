@@ -28,6 +28,10 @@ const orderSchema = new mongoose.Schema({
         totalAmount : {
             type : Number,
             default : 0
+        },
+        isDelivered : {
+            type : Boolean,
+            default : false
         }
 }, {
     timestamps : true

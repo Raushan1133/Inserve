@@ -24,6 +24,10 @@ import toast from 'react-hot-toast'
 import Context from './utils/Context'
 import CartPage from './pages/CartPage'
 import MapComponent from './component/MapBox'
+import Cancel from './pages/Cancel'
+import Success from './pages/Success'
+import Orders from './pages/Orders'
+import OrderHistory from './pages/OrderHistory'
 // import { BusinessList } from './pages/BusinessList'
 
 function App() {
@@ -93,7 +97,11 @@ function App() {
           <Route path='mybookings' element={<MyBookings />} />
           <Route path='provider-dashboard' element={<ProviderDashBoard />} />
           <Route path='provider-settings' element={<ProviderSettings />} />
+          <Route path='success' element={<Success />} />
+          <Route path='cancel' element={<Cancel />} />
+          <Route path='order' element={<Orders />} />
           <Route path='cart' element={<CartPage />} />
+          <Route path='order-history' element={<OrderHistory />} />
           <Route path='navigate-to-provider' element={<MapComponent />} />
           </Route>
           <Route path='*' element={<NotFound/>} />

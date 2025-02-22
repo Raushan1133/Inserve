@@ -160,8 +160,13 @@ export const summaryApi ={
         url : import.meta.env.VITE_SERVER+"/api/user/find-businesses",
         method : "POST"
     },
+    // Payments
     payment : {
         url : import.meta.env.VITE_SERVER+"/api/order/checkout",
         method : "POST"
+    },
+    getOrders :{
+        url : import.meta.env.VITE_SERVER+"/api/order/get-orders",
+        method : "GET"
     }
 }
