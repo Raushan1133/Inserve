@@ -159,5 +159,9 @@ export const summaryApi ={
     searchBusiness : {
         url : import.meta.env.VITE_SERVER+"/api/user/find-businesses",
         method : "POST"
+    },
+    payment : {
+        url : import.meta.env.VITE_SERVER+"/api/order/checkout",
+        method : "POST"
     }
 }

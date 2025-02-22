@@ -7,6 +7,8 @@ import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { summaryApi } from '@/common/summaryApi';
 import toast from 'react-hot-toast';
 import emptyCart from '../assets/empty-cart.gif'
+import {loadStripe} from '@stripe/stripe-js'
+
 
 
 
@@ -86,6 +88,26 @@ const CartPage = () => {
       }
     }
 
+    const handlePayment = async()=>{
+      const stripePromise = await loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
+      const response = await fetch(summaryApi.payment.url,{
+        method:summaryApi.payment.method,
+        credentials:'include',
+        headers:{
+            "content-type":"application/json"
+        },
+        body:JSON.stringify({
+            cartItems
+        })
+    })
+
+    const responseData = await response.json();
+    console.log(responseData)
+    if(responseData?.id){
+        stripePromise.redirectToCheckout({sessionId : responseData.id});
+    }
+    }
+
     const totalQty = cartItems.reduce((previousValue,currentValue)=>previousValue + currentValue.quantity,0)
     const totalPrice = cartItems.reduce((prev,curr)=>prev + (curr.quantity * curr?.productId?.productSellingPrice) , 0)
     let totalSavings = cartItems.reduce((prev,curr)=>prev + (curr.quantity * curr?.productId?.productCostPrice) , 0)
@@ -155,7 +177,7 @@ const CartPage = () => {
                   <h1>You Will Save On This Order : ₹{totalSavings} </h1>
 
               </div>
-              <div className='p-2 bg-primary text-center font-bold text-white cursor-pointer' >Secure Checkout</div>
+              <div className='p-2 bg-primary text-center font-bold text-white cursor-pointer' onClick={()=>handlePayment()} >Secure Checkout</div>
             </div>
             }
       </div> : <div className='flex justify-center translate-y-40'>

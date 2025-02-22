@@ -12,6 +12,7 @@ import commonRouter from './routes/commonRoutes.js';
 import bookingRouter from './routes/bookingRoutes.js';
 import productRouter from './routes/productRoutes.js';
 import cartRouter from './routes/cartRoutes.js';
+import orderRouter from './routes/Order.js';
 configDotenv();
 connectDB();
 app.use(express.json())
@@ -29,6 +30,7 @@ app.use("/api/common",commonRouter);
 app.use("/api/booking",bookingRouter);
 app.use("/api/product",productRouter);
 app.use("/api/cart",cartRouter);
+app.use("/api/order",orderRouter)
 
 app.get("/",(req,res)=>{
     try {
