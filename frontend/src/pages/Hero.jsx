@@ -193,34 +193,34 @@ const Hero = () => {
         </div>
       </div>
       {/* Category List  */}
-      <div className="mt-5">
-        <h1 className="text-xl font-semibold">Some Popular Categories</h1>
-        <div className="grid grid-cols-3 mt-5 md:grid-cols-4 lg:grid-cols-10 gap-4 justify-center">
-          {categories.length > 0
-            ? categories.map((data, i) => (
-                <Link
-                  to={"/all-category-business/" + data?._id}
-                  key={i}
-                  className="flex flex-col gap bg-purple-200 overflow-hidden p-1   items-center justify-center rounded-lg cursor-pointer hover:scale-110 transition ease-in-out "
-                >
-                  <div>
-                    <img
-                      src={data?.icon}
-                      className="h-24 w-24 overflow-hidden object-scale-dow mix-blend-multiply"
-                      alt="icon"
-                    />
-                  </div>
-                  <h2 className="text-primary text-sm">{data?.name}</h2>
-                </Link>
-              ))
-            : [1, 2, 3, 4, 5, 6].map((item, i) => (
-                <div
-                  key={i}
-                  className="h-[120px] w-full bg-slate-200 animate-pulse rounded-lg"
-                ></div>
-              ))}
+        <div className="mt-5 ">
+          <h1 className="text-xl font-semibold">Some Popular Categories</h1>
+          <div className="grid grid-cols-3 mt-5 md:grid-cols-4 lg:grid-cols-10 gap-4 justify-center">
+            {categories.length > 0
+              ? categories.map((data, i) => (
+                  <Link
+                    to={"/all-category-business/" + data?._id}
+                    key={i}
+                    className="flex flex-col gap bg-purple-200  overflow-hidden p-1   items-center justify-center rounded-lg cursor-pointer hover:scale-110 transition ease-in-out "
+                  >
+                    <div>
+                      <img
+                        src={data?.icon}
+                        className="h-24 w-24 overflow-hidden object-scale-dow mix-blend-multiply"
+                        alt="icon"
+                      />
+                    </div>
+                    <h2 className="text-primary text-sm">{data?.name}</h2>
+                  </Link>
+                ))
+              : [1, 2, 3, 4, 5, 6].map((item, i) => (
+                  <div
+                    key={i}
+                    className="h-[120px] w-full bg-slate-200 animate-pulse rounded-lg"
+                  ></div>
+                ))}
+          </div>
         </div>
-      </div>
 
       {/* Business List */}
       <div className="mt-10 font-semibold text-xl">

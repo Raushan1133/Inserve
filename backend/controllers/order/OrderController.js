@@ -10,6 +10,18 @@ const getOrders = async(req,res)=>{
     }
 }
 
+const getOrdersForProvider = async(req,res)=>{
+    try {
+        const providerId = req.user.userId;
+        const orders = await orderModel.find();
+        const providerData = orders.productDetails.foreach((products,i)=>{
+            products.filter((product,id)=>{})
+        })
+    } catch (error) {
+        
+    }
+}
+
 const cancelOrder = async(req,res)=>{
     try {
         const userId = req.user.userId;

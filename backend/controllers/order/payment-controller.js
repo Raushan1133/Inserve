@@ -29,7 +29,8 @@ const paymentController =async (req,res) => {
                             images : item.productId.productImages,
                             metadata : {
                                 productId : item.productId._id
-                            }
+                            },
+                            productOwner : item.productOwner
                         },
                         unit_amount : item.productId.productSellingPrice*100
                     },
