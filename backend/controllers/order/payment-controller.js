@@ -30,7 +30,7 @@ const paymentController =async (req,res) => {
                             metadata : {
                                 productId : item.productId._id
                             },
-                            productOwner : item.productOwner
+                            // productOwner : item.productOwner
                         },
                         unit_amount : item.productId.productSellingPrice*100
                     },

@@ -19,7 +19,7 @@ async function getLineItems(lineItems ){
         price: item.price.unit_amount / 100,
         quantity: item.quantity,
         image: product.images,
-        productOwner : item.productOwner
+        // productOwner : item.productOwner
       }
 
       productItems.push(productData)
