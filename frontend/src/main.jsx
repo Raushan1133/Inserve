@@ -10,7 +10,7 @@ import store from "./app/store";
 import { Toaster } from "react-hot-toast";
 
 createRoot(document.getElementById("root")).render(
-  <StrictMode>
+  // <StrictMode>
     <AuthProvider projectId="P2piC2F62Jz334D1MJSzyJze3LLv">
       <ThemeProvider>
         <Provider store={store}>
@@ -19,5 +19,5 @@ createRoot(document.getElementById("root")).render(
         </Provider>
       </ThemeProvider>
     </AuthProvider>
-  </StrictMode>
+  // </StrictMode>
 );
